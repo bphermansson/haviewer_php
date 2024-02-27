@@ -5,8 +5,26 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Bootstrap demo</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-  </head>
-  <body>
+  
+    <script type="text/javascript"> 
+        function display_c(){
+            var refresh=1000; // Refresh rate in milli seconds
+            mytime=setTimeout('display_ct()',refresh)
+            }
+
+            function display_ct() {
+            var date = new Date()
+            var hours = date.getHours().toString().padStart(2, '0');
+            var minutes = date.getMinutes().toString().padStart(2, '0');
+            var seconds = date.getSeconds().toString().padStart(2, '0');
+
+            document.getElementById('ct').innerHTML = hours + ":" + minutes + ":" + seconds;
+            display_c();
+        }
+    </script>
+
+</head>
+  <body onload=display_ct();>
     <?php
     function getHA($id) { //ID to read - for example sensor.foo
         $key = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJiM2IxYTU3YzJmYmM0MGRmODNjNGQ1ZGIzNTA1NDg1NCIsImlhdCI6MTcwNjI3Nzc1OSwiZXhwIjoyMDIxNjM3NzU5fQ.y7UdYrCBziTyleaCb5WVrB1up_BcpgvRTXVKqItlJL0'; //Long-lived access token, can be obtained in HomeAssistant UI→Profile
@@ -95,7 +113,7 @@
                 $val = getValue('weather.smhi_home');
                 echo '<h2>Prognos idag: '.$val->state.'</h2>'.PHP_EOL;
 
-                echo $val->attributes->forecast;
+                #echo $val->attributes->forecast;
                 $values = $val->attributes->forecast;
                 #echo $values[1]->condition;
                 echo '<h2>Prognos imorgon: '.$values[1]->condition.'</h2>'.PHP_EOL;
@@ -103,7 +121,9 @@
 
                 echo '<h2>Lufttryck: '.$val->attributes->pressure.'</h2>';
 
-            ?>          
+            ?>       
+            <span id='ct' ></span>
+   
         </div>
     </div>
 </div>

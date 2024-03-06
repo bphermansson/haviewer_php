@@ -78,10 +78,8 @@
         
     }
     $bpic = random_pic();
-    
 ?>
 <body onload=display_ct();>"
-
     <div class="topdiv bg-info p-2 text-dark bg-opacity-75">
         <table>
             <tr>
@@ -135,14 +133,36 @@
             $valwinddir = getValue('sensor.wind_sensor_human');
             $valprednow = getValue('sensor.prediction');
             $valpredtomorrow = getValue('sensor.prediction_tomorrow');
-            echo '
-            <h2>Temp: '.$val->state.'C</h2>
-            <h2>Fukt: '.$valhum->state.'%</h2>
-            <h2>Vindstyrka: '.$valwind->state.'%</h2>   # Gör en tabell med värden
-            <h2>Vindriktning: '.$valwinddir->state.'</h2>
-            <h2>Väder idag: '.$valprednow->state.'</h2>
-            <h2>Väder imorgon: '.$valpredtomorrow->state.'</h2>
-            '.PHP_EOL;
+
+            echo "
+            <h2>Temp: ".$val->state."C</h2>
+            <h2>Fukt: ".$valhum->state."%</h2>";
+
+            echo "<h2>Vindstyrka: ";
+            if ($valwind->state <= 0.2) {
+                echo "Lugnt($valwind->state)";
+            }
+            elseif ($valwind->state > 0.2 && $valwind->state < 3.4) {
+                echo "Svag vind($valwind->state)";
+            }
+            elseif ($valwind->state >= 3.4 && $valwind->state < 8.0) {
+                echo "Måttlig vind($valwind->state)";
+            }
+            elseif ($valwind->state >= 8.0 && $valwind->state < 13.9) {
+                echo "Frisk vind($valwind->state)";
+            }
+            elseif ($valwind->state >= 13.9 && $valwind->state < 24.5) {
+                echo "Hård vind($valwind->state)";
+            }
+            elseif ($valwind->state >= 24.5) {
+                echo "Storm($valwind->state)";
+            }
+            echo "</h2>";
+            echo "
+            <h2>Vindriktning: ".$valwinddir->state."</h2>
+            <h2>Väder idag: ".$valprednow->state."</h2>
+            <h2>Väder imorgon: ".$valpredtomorrow->state."</h2>
+            ".PHP_EOL;
         ?>
    </div>
 

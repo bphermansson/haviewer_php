@@ -121,8 +121,20 @@
             ?>
             <div class="el bg-info bg-opacity-75">
                 <?php
-                    $val = getValue('sensor.nordpool_kwh_se3_sek_3_10_025');
-                    echo '<h2>Elpris: '.$val->state.'</h2>'.PHP_EOL;
+                    $Y = date("Y");
+                    $m = date("m");
+                    $d = date("d");
+                    $h = date("H");
+
+                    $content = file_get_contents("https://www.elprisetjustnu.se/api/v1/prices/".$Y."/".$m."-".$d."_SE3.json");
+                    $result  = json_decode($content);
+                    $timenow = date(DATE_ATOM, mktime($h, 0, 0, $m, $d, $Y));
+                    foreach ($result as $row){
+                        if($row->time_start == $timenow)
+                        {
+                            echo '<h2>Elpris: '.round($row->SEK_per_kWh*1.25, 2).'</h2>'.PHP_EOL;
+                        }
+                    }
                 ?>  
             </div>
         </div>

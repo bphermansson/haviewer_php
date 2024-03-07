@@ -25,7 +25,8 @@
             var minutes = date.getMinutes().toString().padStart(2, '0');
             var seconds = date.getSeconds().toString().padStart(2, '0');
             var year = date.getFullYear().toString().padStart(2, '0');
-            var month = date.getMonth().toString().padStart(2, '0');
+            var month = date.getMonth()+1;
+            month=month.toString().padStart(2, '0');
             var day = date.getDate().toString().padStart(2, '0');
 
             document.getElementById('ct').innerHTML = hours + ":" + minutes + ":" + seconds;
@@ -43,6 +44,9 @@
 
 </head>
     <?php
+
+    include 'postenkommer.php';
+
     function getHA($id) { //ID to read - for example sensor.foo
         $key = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJiM2IxYTU3YzJmYmM0MGRmODNjNGQ1ZGIzNTA1NDg1NCIsImlhdCI6MTcwNjI3Nzc1OSwiZXhwIjoyMDIxNjM3NzU5fQ.y7UdYrCBziTyleaCb5WVrB1up_BcpgvRTXVKqItlJL0'; //Long-lived access token, can be obtained in HomeAssistant UI→Profile
         $url = 'http://192.168.1.10:8123/'; //URL to your HA including trailing /
@@ -79,7 +83,7 @@
     }
     $bpic = random_pic();
 ?>
-<body onload=display_ct();>"
+<body onload=display_ct();>
     <div class="topdiv bg-info p-2 text-dark bg-opacity-75">
         <table>
             <tr>
@@ -95,22 +99,24 @@
     </div>
     <div class="post bg-info bg-opacity-75">
             <?php
-                $val = getValue('sensor.postnord_delivery_46791');
+                //$val = getValue('sensor.postnord_delivery_46791');
                 echo '<h2>Posten kommer: ';
-                switch ($val->state) {
-                    case 0:
-                        echo "Idag";
-                        break;
-                    case 1:
-                        echo "Imorgon";
-                        break;
-                    case 2:
-                        echo "I övermorgon";
-                        break;
-                    case 3:
-                        echo "Om tre dagar";
-                        break;
-                }
+                // switch ($val->state) {
+                //     case 0:
+                //         echo "Idag";
+                //         break;
+                //     case 1:
+                //         echo "Imorgon";
+                //         break;
+                //     case 2:
+                //         echo "I övermorgon";
+                //         break;
+                //     case 3:
+                //         echo "Om tre dagar";
+                //         break;
+                // }
+                $dday = mailDeliveryDay();
+                echo $dday;
                 echo '</h2>';
             ?>
             <div class="el bg-info bg-opacity-75">
@@ -125,7 +131,7 @@
         <img alt="" width="500" height="500" src="<?=$bpic?>">
     </div>
 
-    <div class="innerdiv bg-info p-2 text-dark bg-opacity-75">
+    <div class="innerdiv bg-light p-2 text-dark bg-opacity-75">
         <?php
             $val = getValue('sensor.outdoortemp_xiron');
             $valhum = getValue('sensor.outdoorhum_xiron');

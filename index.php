@@ -143,9 +143,12 @@
             $content = file_get_contents("https://opendata-download-metobs.smhi.se/api/version/1.0/parameter/1/station/82260/period/latest-day/data.json");
             $result  = json_decode($content);
             $t = $result->value;
-
             echo "<h2>Temp: ".$t[0]->value."C</h2>";
-            echo "<h2>Fukt: ".$valhum->state."%</h2>";
+
+            $content = file_get_contents("https://opendata-download-metobs.smhi.se/api/version/1.0/parameter/6/station/82260/period/latest-day/data.json");
+            $result  = json_decode($content);
+            $t = $result->value;
+            echo "<h2>Fukt: ".$t[0]->value."%</h2>";
 
             echo "<h2>Vindstyrka: ";
             if ($valwind->state <= 0.2) {

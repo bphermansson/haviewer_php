@@ -99,22 +99,7 @@
     </div>
     <div class="post bg-info bg-opacity-75">
             <?php
-                //$val = getValue('sensor.postnord_delivery_46791');
                 echo '<h2>Posten kommer: ';
-                // switch ($val->state) {
-                //     case 0:
-                //         echo "Idag";
-                //         break;
-                //     case 1:
-                //         echo "Imorgon";
-                //         break;
-                //     case 2:
-                //         echo "I övermorgon";
-                //         break;
-                //     case 3:
-                //         echo "Om tre dagar";
-                //         break;
-                // }
                 $dday = mailDeliveryDay();
                 echo $dday;
                 echo '</h2>';
@@ -152,9 +137,15 @@
             $valprednow = getValue('sensor.prediction');
             $valpredtomorrow = getValue('sensor.prediction_tomorrow');
 
-            echo "
-            <h2>Temp: ".$val->state."C</h2>
-            <h2>Fukt: ".$valhum->state."%</h2>";
+            //Såtenäs (82260)
+            //GET /api/version/1.0/parameter/1/station/159880/period/latest-hour.json
+            //https://opendata-download-metobs.smhi.se/api/version/1.0/parameter/1/station/159880/period/latest-day/data.json
+            $content = file_get_contents("https://opendata-download-metobs.smhi.se/api/version/1.0/parameter/1/station/82260/period/latest-day/data.json");
+            $result  = json_decode($content);
+            $t = $result->value;
+
+            echo "<h2>Temp: ".$t[0]->value."C</h2>";
+            echo "<h2>Fukt: ".$valhum->state."%</h2>";
 
             echo "<h2>Vindstyrka: ";
             if ($valwind->state <= 0.2) {

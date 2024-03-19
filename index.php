@@ -130,10 +130,10 @@
 
     <div class="innerdiv bg-light p-2 text-dark bg-opacity-75">
         <?php
-            $val = getValue('sensor.outdoortemp_xiron');
-            $valhum = getValue('sensor.outdoorhum_xiron');
-            $valwind = getValue('sensor.satenas_vind');
-            $valwinddir = getValue('sensor.wind_sensor_human');
+            //$val = getValue('sensor.outdoortemp_xiron');
+            //$valhum = getValue('sensor.outdoorhum_xiron');
+            //$valwind = getValue('sensor.satenas_vind');
+            //$valwinddir = getValue('sensor.wind_sensor_human');
             $valprednow = getValue('sensor.prediction');
             $valpredtomorrow = getValue('sensor.prediction_tomorrow');
 
@@ -150,34 +150,81 @@
             $t = $result->value;
             echo "<h2>Fukt: ".$t[0]->value."%</h2>";
 
+            $content = file_get_contents("https://opendata-download-metobs.smhi.se/api/version/1.0/parameter/4/station/82260/period/latest-day/data.json");
+            $result  = json_decode($content);
+            $t = $result->value;
+            $wSpeed = $t[0]->value;
+
             echo "<h2>Vindstyrka: ";
-            if ($valwind->state <= 0.2) {
-                echo "Lugnt($valwind->state)";
+            if ($wSpeed <= 0.2) {
+                echo "Lugnt($wSpeed)";
             }
-            elseif ($valwind->state > 0.2 && $valwind->state < 3.4) {
-                echo "Svag vind($valwind->state)";
+            elseif ($wSpeed > 0.2 && $wSpeed < 3.4) {
+                echo "Svag vind($wSpeed)";
             }
-            elseif ($valwind->state >= 3.4 && $valwind->state < 8.0) {
-                echo "Måttlig vind($valwind->state)";
+            elseif ($wSpeed >= 3.4 && $wSpeed < 8.0) {
+                echo "Måttlig vind($wSpeed)";
             }
-            elseif ($valwind->state >= 8.0 && $valwind->state < 13.9) {
-                echo "Frisk vind($valwind->state)";
+            elseif ($wSpeed >= 8.0 && $wSpeed < 13.9) {
+                echo "Frisk vind($wSpeed)";
             }
-            elseif ($valwind->state >= 13.9 && $valwind->state < 24.5) {
-                echo "Hård vind($valwind->state)";
+            elseif ($wSpeed >= 13.9 && $wSpeed < 24.5) {
+                echo "Hård vind($wSpeed)";
             }
-            elseif ($valwind->state >= 24.5) {
-                echo "Storm($valwind->state)";
+            elseif ($wSpeed >= 24.5) {
+                echo "Storm($wSpeed)";
             }
             echo "</h2>";
+
+            // echo "<h2>Vindriktning: ".$valwinddir->state."</h2>";
+            $content = file_get_contents("https://opendata-download-metobs.smhi.se/api/version/1.0/parameter/3/station/82260/period/latest-day/data.json");
+            $result  = json_decode($content);
+            $t = $result->value;
+            $vd = $t[0]->value;
+            // echo "<h2>vinddir: ".$vd."%</h2>";
+            $index = ($vd+11.25)/22.5;
+            $array = array(0 => 'Nord', 1 => 'Nordnordöst', 2 => 'Nordöst', 3 => 'Östnordöst', 4 => 'Öst', 5 => 'Östsydöst', 6 => 'Sydöst', 7 => 'Sydsydöst', 8 => 'Syd', 9 => 'Sydsydväst', 10 => 'Sydväst', 11 => 'Västsydväst', 12 => 'Väst', 13 => 'Västnordväst', 14 => 'Nordväst', 15 => 'Nordnordväst');
+            echo "<h2>Vindriktning: ".$array[$index]."</h2>";
+
+
+// 58.418976	13.051757
+
             echo "
-            <h2>Vindriktning: ".$valwinddir->state."</h2>
             <h2>Väder idag: ".$valprednow->state."</h2>
             <h2>Väder imorgon: ".$valpredtomorrow->state."</h2>
             ".PHP_EOL;
         ?>
    </div>
+   <div class="wImage">
+    <?php
+        //echo "<h2><embed  width='50' height='40' src='WeatherImages/" . $ws .".svg' alt='Weather symbol SVG'/></h2>";
+        //<object data="assets/twitter-wrap.svg" type="image/svg+xml"></object>
 
+        $content = file_get_contents("https://opendata-download-metfcst.smhi.se/api/category/pmp3g/version/2/geotype/point/lon/12.565/lat/58.427/data.json");
+        $result  = json_decode($content);
+        $e = $result->timeSeries[0];
+        //var_dump($e);
+        foreach ($e as $tag){
+            //var_dump($tag);
+            foreach ($tag as $subtag){
+                 if($subtag->name == "Wsymb2"){
+            //         // echo $subtag->name;
+                    $wsNr = $subtag->values[0]; 
+                    echo $wsNr;
+                    $ws = getWS($wsNr);
+                    //echo $ws;
+            //         //echo "<h2><img width='50' height='40' src='WeatherImages/" . $ws .".svg' alt='Weather symbol SVG'/></h2>";
+            //         // echo "<object data='WeatherImages/" . $ws .".svg' type='image/svg+xml'>
+            //         //     <img src='/path-to/your-fallback-image.png' />
+            //         //     </object>";
+                 }
+            }
+        }
+
+       // echo "<h2><img src='WeatherImages/" . $ws .".png' alt=''></h2>";
+
+    ?>
+   </div>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous">
         </script>
         <script>

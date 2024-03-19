@@ -44,3 +44,10 @@ img {
     height: auto;
     aspect-ratio: attr(width) / attr(height);
 }
+.wImage{
+   width: 200px;
+   min-height: 1px;
+	float: left;
+	background-color: blue;
+	color: black;
+}

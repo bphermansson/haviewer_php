@@ -46,6 +46,7 @@
     <?php
 
     include 'postenkommer.php';
+    include 'weathericon.php';
 
     function getHA($id) { //ID to read - for example sensor.foo
         $key = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJiM2IxYTU3YzJmYmM0MGRmODNjNGQ1ZGIzNTA1NDg1NCIsImlhdCI6MTcwNjI3Nzc1OSwiZXhwIjoyMDIxNjM3NzU5fQ.y7UdYrCBziTyleaCb5WVrB1up_BcpgvRTXVKqItlJL0'; //Long-lived access token, can be obtained in HomeAssistant UI→Profile
@@ -210,10 +211,11 @@
                  if($subtag->name == "Wsymb2"){
             //         // echo $subtag->name;
                     $wsNr = $subtag->values[0]; 
-                    echo $wsNr;
+                    echo $wsNr."-";
+                    //$ws = getWS(1);
                     $ws = getWS($wsNr);
-                    //echo $ws;
-            //         //echo "<h2><img width='50' height='40' src='WeatherImages/" . $ws .".svg' alt='Weather symbol SVG'/></h2>";
+                    echo $ws;
+                    echo "<h2><img width='50' height='40' src='WeatherImages/" . $ws .".png' alt='Weather symbol SVG'/></h2>";
             //         // echo "<object data='WeatherImages/" . $ws .".svg' type='image/svg+xml'>
             //         //     <img src='/path-to/your-fallback-image.png' />
             //         //     </object>";

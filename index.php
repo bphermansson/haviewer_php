@@ -211,7 +211,7 @@
                  if($subtag->name == "Wsymb2"){
             //         // echo $subtag->name;
                     $wsNr = $subtag->values[0]; 
-                    echo $wsNr."-";
+                    //echo $wsNr."-";
                     //$ws = getWS(1);
                     $ws = getWS($wsNr);
                     echo $ws;

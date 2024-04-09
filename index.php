@@ -29,7 +29,7 @@
             month=month.toString().padStart(2, '0');
             var day = date.getDate().toString().padStart(2, '0');
 
-            document.getElementById('ct').innerHTML = hours + ":" + minutes + ":" + seconds;
+            document.getElementById('ct').innerHTML = hours + ":" + minutes;
             document.getElementById('ctdate').innerHTML = year + "-" + month + "-" + day;
             display_c();
         }
@@ -91,7 +91,7 @@
                 <td>&nbsp;</td>
             <tr>
             <tr>
-                <td width="250px"><h1 class="display-1"><div id='ct' ></div></h1></td>
+                <td width="200px"><h1 class="display-1"><div id='ct' ></div></h1></td>
                 <td>&nbsp;</td>
                 <td width="250px"><h1 class="display-4"><div id='ctdate' ></div></h1></td>
                 <td width="50px"><p class="fs-3"><div id='updated'></div></td>

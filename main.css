@@ -55,3 +55,8 @@ img {
 	padding: 10px;
 	margin: 5px;
 }
+.updated {
+	position: absolute;
+	top: 0;
+	right: 0;
+}

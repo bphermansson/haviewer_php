@@ -94,9 +94,10 @@
                 <td width="200px"><h1 class="display-1"><div id='ct' ></div></h1></td>
                 <td>&nbsp;</td>
                 <td width="250px"><h1 class="display-4"><div id='ctdate' ></div></h1></td>
-                <td width="50px"><p class="fs-3"><div id='updated'></div></td>
             </tr>
         </table>
+    </div>
+    <div class="updated" id="updated">
     </div>
     <div class="post bg-info bg-opacity-75">
             <?php
@@ -165,7 +166,7 @@
                      if($subtag->name == "t"){
                         $temp = $subtag->values[0]; 
                      }
-                     if($subtag->name == "spp"){
+                     if($subtag->name == "r"){
                         $moist = $subtag->values[0]; 
                      }
                      if($subtag->name == "msl"){

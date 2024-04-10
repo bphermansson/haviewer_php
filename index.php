@@ -93,7 +93,7 @@
             <tr>
                 <td width="200px"><h1 class="display-1"><div id='ct' ></div></h1></td>
                 <td>&nbsp;</td>
-                <td width="220px"><h1 class="display-4"><div id='ctdate' ></div></h1></td>
+                <td width="250px"><h1 class="display-4"><div id='ctdate' ></div></h1></td>
             </tr>
         </table>
     </div>

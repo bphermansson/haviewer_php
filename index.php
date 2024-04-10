@@ -93,7 +93,7 @@
             <tr>
                 <td width="200px"><h1 class="display-1"><div id='ct' ></div></h1></td>
                 <td>&nbsp;</td>
-                <td width="250px"><h1 class="display-4"><div id='ctdate' ></div></h1></td>
+                <td width="220px"><h1 class="display-4"><div id='ctdate' ></div></h1></td>
             </tr>
         </table>
     </div>
@@ -166,6 +166,9 @@
                      if($subtag->name == "t"){
                         $temp = $subtag->values[0]; 
                      }
+                     if($subtag->name == "msl"){
+                        $pressure = $subtag->values[0]; 
+                     }
                      if($subtag->name == "r"){
                         $moist = $subtag->values[0]; 
                      }
@@ -180,6 +183,7 @@
             }
             echo "<h2>Temp: ".$temp."C</h2>";
             echo "<h2>Fukt: ".$moist."%</h2>";
+            echo "<h2>Lufttryck: ".$pressure."hPa</h2>";
 
             echo "<h2>Vindstyrka: ";
             if ($wSpeed <= 0.2) {
